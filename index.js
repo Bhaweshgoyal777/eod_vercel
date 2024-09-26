@@ -41,7 +41,7 @@ bot.onText(/\/send (.+)/, (msg, match) => {
   const chatId = msg.chat.id;
   const emailParams = match[1].split(' ');
 
-  if (emailParams.length) {
+  if (!emailParams.length) {
     bot.sendMessage(chatId, 'Usage: /send <message>');
     return;
   }
@@ -65,7 +65,7 @@ bot.onText(/\/send (.+)/, (msg, match) => {
     from: 'satyam@zeltatech.com',
     // to:"naveen@zeltatech.com",
     // cc: "HR@zeltatech.com",
-    to: 'satyamsen624@gmail.com',
+    to: 'bhaweshgoyal@zeltatech.com',
     cc: 'satyamsen01012000@gmail.com',
     subject: subject,
     // text: message
@@ -102,18 +102,18 @@ bot.onText(/\/send (.+)/, (msg, match) => {
     `,
   };
 
-  //   transporter.sendMail(mailOptions, (error, info) => {
-  //     if (error) {
-  //       console.error(error);
-  //       bot.sendMessage(chatId, `Failed to send email: ${error.toString()}`);
-  //     } else {
-  //       console.log('Email sent: ' + info.response);
-  //       bot.sendMessage(
-  //         chatId,
-  //         `Email sent to ${recipientEmail} with subject "${subject}"`
-  //       );
-  //     }
-  //   });
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      bot.sendMessage(chatId, `Failed to send email: ${error.toString()}`);
+    } else {
+      console.log('Email sent: ' + info.response);
+      bot.sendMessage(
+        chatId,
+        `Email sent to ${recipientEmail} with subject "${subject}"`
+      );
+    }
+  });
 });
 
 // Handle other messages
