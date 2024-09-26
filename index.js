@@ -5,6 +5,7 @@ const nodemailer = require('nodemailer');
 
 // Initialize the Express app
 const app = express();
+require('dotenv').config();
 
 // Replace with your bot token
 
