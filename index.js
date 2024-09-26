@@ -7,10 +7,9 @@ const nodemailer = require('nodemailer');
 const app = express();
 
 // Replace with your bot token
-const token = '7187452741:AAFH1WeR78Aqnn_e77Ngf_TAYUvQadfAF2k';
 
 // Create a Telegram bot instance
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
 
 const SENDER = {
   satyam0101: {
