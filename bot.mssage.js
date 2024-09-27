@@ -5,40 +5,13 @@ const { sendEmail } = require("./mail.service");
 const chatId = "@eodsender";
 const handleMessage = async (from, mssg, bot) => {
   try {
-    /*
-                    {
-            message_id: 46,
-            from: {
-                id: 1003455705,
-                is_bot: false,
-                first_name: 'Bháwëśh',
-                last_name: 'Ğøýàĺ',
-                username: 'Bhaweshgoyal',
-                language_code: 'en'
-            },
-            author_signature: 'Bháwëśh Ğøýàĺ',
-            chat: {
-                id: -1002388496470,
-                title: 'EOD REPORT SENDER',
-                username: 'eodsender',
-                type: 'channel'
-            },
-            date: 1727420428,
-            text: '/ttsar',
-            entities: [ { offset: 0, length: 6, type: 'bot_command' } ]
-            }
-    */
-    // const checkUser = await fetchUser(from);
-    // if (!checkUser) {
-    //   bot.sendMessage(
-    //     chatId,
-    //     `Hello ${from},\n please provide my nodemailer email and pass`
-    //   );
-    // }
     function getCommandType(message) {
       if (message.includes("/start") || message.includes("start")) {
         return "START";
-      } else if (message.includes("/register")) {
+      } else if (
+        message.includes("/register") ||
+        message.includes("register")
+      ) {
         return "REGISTER";
       } else if (message.includes("email")) {
         return "EMAIL";
@@ -70,6 +43,8 @@ const handleMessage = async (from, mssg, bot) => {
       }
       case "REGISTER": {
         await createUser({ userName: from, email: "", pass: "" });
+        const user = await fetchUser(from);
+        if (user) return bot.sendMessage(chatId, "user already exist");
         bot.sendMessage(chatId, "please provide email and pass for nodemailer");
         break;
       }
@@ -110,7 +85,7 @@ const handleMessage = async (from, mssg, bot) => {
         break;
       }
       default: {
-        bot.sendMessage(chatId, "Invalid command");
+        bot.sendMessage(chatId, "Invalid command.");
         break;
       }
     }
