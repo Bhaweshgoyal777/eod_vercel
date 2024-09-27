@@ -17,7 +17,7 @@ const createTransporter = async (user) => {
  */
 const sendEmail = async (user, mailContent) => {
   try {
-    const subject = `EOD Report | ${user.userName} | Tech | ${moment().format(
+    const subject = `EOD Report | ${user.name} | Tech | ${moment().format(
       "DD MMM YY - dddd"
     )}`;
 

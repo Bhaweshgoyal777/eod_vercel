@@ -36,12 +36,14 @@ const handleMessage = async (from, mssg, bot) => {
     //   );
     // }
     function getCommandType(message) {
-      if (message.includes("/start")) {
+      if (message.includes("/start") || message.includes("start")) {
         return "START";
       } else if (message.includes("/register")) {
         return "REGISTER";
       } else if (message.includes("email")) {
         return "EMAIL";
+      } else if (message.includes("name")) {
+        return "NAME";
       } else if (message.includes("pass")) {
         return "PASS";
       } else if (message.includes("send")) {
@@ -51,14 +53,19 @@ const handleMessage = async (from, mssg, bot) => {
     }
 
     // Get the command type
-    const type = getCommandType(mssg.toLowerCase());
-    console.log(type);
+    const type = getCommandType(mssg.trim().toLowerCase());
     switch (type) {
       case "START": {
         bot.sendMessage(
           chatId,
           `Hello ${from},\n welcome to EOD Report Sender`
         );
+        break;
+      }
+      case "NAME": {
+        let [msg, name] = mssg.split("name");
+        const response = await updateUser(from, { userName: name.trim() });
+        if (response) bot.sendMessage(chatId, "Name updated successfully");
         break;
       }
       case "REGISTER": {
@@ -88,6 +95,15 @@ const handleMessage = async (from, mssg, bot) => {
       case "SEND": {
         let [send, mailContent] = mssg.split("send");
         const user = await fetchUser(from);
+        if (
+          !user ||
+          !user.nodemailer.email ||
+          !user.nodemailer.pass ||
+          !user.name
+        ) {
+          bot.sendMessage(chatId, "User not found");
+          return;
+        }
         const sendMessage = await sendEmail(user, mailContent);
         if (sendMessage) bot.sendMessage(chatId, "Mail sent successfully");
         else bot.sendMessage(chatId, "Mail not sent");
