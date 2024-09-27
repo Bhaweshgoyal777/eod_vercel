@@ -11,7 +11,9 @@ require('dotenv').config();
 
 // Create a Telegram bot instance
 const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
-
+bot.stopPolling()
+  .then(() => console.log('Bot polling stopped'))
+  .catch(err => console.error('Error stopping bot polling:', err));
 const SENDER = {
   satyam0101: {
     auth: {
@@ -46,10 +48,12 @@ bot.onText(/\/send (.+)/, (msg, match) => {
     bot.sendMessage(chatId, 'Usage: /send <message>');
     return;
   }
-  if (!SENDER?.[msg.from.username]) {
-    bot.sendMessage(chatId, 'You are not a subscribed user');
-    return;
-  }
+
+  // if (!SENDER?.[msg.from.username]) {
+  //   bot.sendMessage(chatId, 'You are not a subscribed user');
+  //   return;
+  // }
+
   // Email configuration
   const transporter = nodemailer.createTransport({
     service: 'gmail',
