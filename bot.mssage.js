@@ -42,9 +42,9 @@ const handleMessage = async (from, mssg, bot) => {
         break;
       }
       case "REGISTER": {
-        await createUser({ userName: from, email: "", pass: "" });
         const user = await fetchUser(from);
         if (user) return bot.sendMessage(chatId, "user already exist");
+        await createUser({ userName: from, email: "", pass: "" });
         bot.sendMessage(chatId, "please provide email and pass for nodemailer");
         break;
       }
