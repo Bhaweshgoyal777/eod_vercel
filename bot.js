@@ -11,7 +11,6 @@ const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 function initBot() {
-  initCron();
   bot.on("channel_post", (msg) => {
     const messageText = msg.text || "";
     handleMessage(msg.author_signature, msg.from.username, messageText, bot);

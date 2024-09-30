@@ -6,9 +6,8 @@ const { bot } = require("./bot");
 const { chatId } = require("./bot.mssage");
 
 // Schedule a task to run daily at 6:39 PM
-//39 18 * * *
-initCron = () => {
-  cron.schedule("30 16 * * *", async () => {
+const initCron = () => {
+  cron.schedule("39 18 * * **", async () => {
     console.log("==================== CRON JOB RUNNING ====================");
     console.log("Running the task at 6:39 PM every day");
     // Your code here
@@ -30,7 +29,7 @@ initCron = () => {
     for (let user of resultPop) {
       bot.sendMessage(
         chatId,
-        `User ${user.name} has not submitted EOD for today \n toh madarchod EOD Bhej.... \n @${user.userName}`
+        `User ${user.name} has not submitted EOD for today \n 🤘🤘Chin Tapak dam dam🤘🤘.... \n @${user.userName}`
       );
     }
   });

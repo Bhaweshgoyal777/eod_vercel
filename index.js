@@ -64,6 +64,7 @@ const express = require("express");
 const TelegramBot = require("node-telegram-bot-api");
 const { initBot } = require("./bot");
 const { connectMongoose } = require("./database");
+const { initCron } = require("./cron");
 require("dotenv").config();
 // Initialize express app
 const app = express();
@@ -90,6 +91,7 @@ app.get("/", (req, res) => {
 // Start the express server for the health check endpoint
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
+  initCron();
   initBot();
   connectMongoose();
   console.log(`Server is running on port ${PORT}`);
