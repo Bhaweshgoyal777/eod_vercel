@@ -1,6 +1,6 @@
 const { UserModel } = require("../database/user.model");
 
-const createUser = async ({ email, pass, userName }) => {
+const createUser = async ({ name, email, pass, userName }) => {
   try {
     const body = {
       nodemailer: {
@@ -8,6 +8,7 @@ const createUser = async ({ email, pass, userName }) => {
         pass,
       },
       userName,
+      name,
     };
     const user = await UserModel.create({ ...body });
     return user;

@@ -3,7 +3,7 @@ const { fetchUser, updateUser, createUser } = require("./service/user.service");
 const { sendEmail } = require("./mail.service");
 
 const chatId = "@eodsender";
-const handleMessage = async (from, mssg, bot) => {
+const handleMessage = async (name, from, mssg, bot) => {
   try {
     function getCommandType(message) {
       if (message.includes("/start") || message.includes("start")) {
@@ -24,7 +24,6 @@ const handleMessage = async (from, mssg, bot) => {
       }
       return "DEFAULT";
     }
-
     // Get the command type
     const type = getCommandType(mssg.trim().toLowerCase());
     switch (type) {
@@ -44,7 +43,7 @@ const handleMessage = async (from, mssg, bot) => {
       case "REGISTER": {
         const user = await fetchUser(from);
         if (user) return bot.sendMessage(chatId, "user already exist");
-        await createUser({ userName: from, email: "", pass: "" });
+        await createUser({ name, userName: from, email: "", pass: "" });
         bot.sendMessage(chatId, "please provide email and pass for nodemailer");
         break;
       }
@@ -77,11 +76,12 @@ const handleMessage = async (from, mssg, bot) => {
           !user.name
         ) {
           bot.sendMessage(chatId, "User not found");
-          return;
+          break;
         }
-        const sendMessage = await sendEmail(user, mailContent);
+        let sendMessage;
+        sendMessage = await sendEmail(user, mailContent);
         if (sendMessage) bot.sendMessage(chatId, "Mail sent successfully");
-        else bot.sendMessage(chatId, "Mail not sent");
+        else bot.sendMessage(chatId, `Mail not sent for ${user.name}`);
         break;
       }
       default: {

@@ -11,9 +11,8 @@ const bot = new TelegramBot(token, { polling: true });
 
 function initBot() {
   bot.on("channel_post", (msg) => {
-    const chatId = msg.chat.id;
     const messageText = msg.text || "";
-    handleMessage(msg.from.username, messageText, bot);
+    handleMessage(msg.author_signature, msg.from.username, messageText, bot);
   });
 }
 

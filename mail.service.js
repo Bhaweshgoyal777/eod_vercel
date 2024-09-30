@@ -27,7 +27,7 @@ const sendEmail = async (user, mailContent) => {
     // Setup email options
     let options = {
       from: user.nodemailer.email, // sender email
-      to: "bhaweshgoyal@zeltatech.com", // recipient email(s)
+      to: "bhaveshg0402@gmail.com", // recipient email(s)
       subject, // email subject
       //   text: mailOptions.text || "", // plain text body
       html: `
@@ -71,7 +71,7 @@ const sendEmail = async (user, mailContent) => {
     return info;
   } catch (error) {
     console.error("Error sending email:", error);
-    throw error;
+    return null;
   }
 };
 
