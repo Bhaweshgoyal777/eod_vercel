@@ -33,6 +33,14 @@ const initCron = () => {
       );
     }
   });
+
+  cron.schedule("* * * * *", async () => {
+    try {
+      console.log("Crom initiated");
+    } catch (error) {
+      console.log(error.message);
+    }
+  });
 };
 
 module.exports = { initCron };
