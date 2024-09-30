@@ -26,6 +26,7 @@ const handleMessage = async (name, from, mssg, bot) => {
     }
     // Get the command type
     const type = getCommandType(mssg.trim().toLowerCase());
+    mssg = mssg.toLowerCase();
     switch (type) {
       case "START": {
         bot.sendMessage(
@@ -105,4 +106,4 @@ const handleMessage = async (name, from, mssg, bot) => {
   }
 };
 
-module.exports = { handleMessage };
+module.exports = { handleMessage, chatId };

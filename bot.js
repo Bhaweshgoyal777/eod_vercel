@@ -3,6 +3,7 @@
 
 const TelegramBot = require("node-telegram-bot-api");
 const { handleMessage } = require("./bot.mssage");
+const { initCron } = require("./cron");
 
 require("dotenv").config();
 const token = process.env.TELEGRAM_TOKEN;
@@ -10,6 +11,7 @@ const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 function initBot() {
+  initCron();
   bot.on("channel_post", (msg) => {
     const messageText = msg.text || "";
     handleMessage(msg.author_signature, msg.from.username, messageText, bot);

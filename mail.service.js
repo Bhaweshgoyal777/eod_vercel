@@ -1,5 +1,6 @@
 const moment = require("moment");
 const nodemailer = require("nodemailer");
+const { fetch, create } = require("./service/eod.service");
 const createTransporter = async (user) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -17,6 +18,7 @@ const createTransporter = async (user) => {
  */
 const sendEmail = async (user, mailContent) => {
   try {
+    await create({ user: user._id, message: mailContent });
     const subject = `EOD Report | ${user.name} | Tech | ${moment().format(
       "DD MMM YY - dddd"
     )}`;
