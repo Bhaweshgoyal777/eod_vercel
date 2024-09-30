@@ -68,6 +68,7 @@ const handleMessage = async (name, from, mssg, bot) => {
       }
       case "SEND": {
         let [send, mailContent] = mssg.split("send");
+        console.log(send, mailContent, "============SEND==============");
         const user = await fetchUser(from);
         if (
           !user ||
@@ -75,7 +76,7 @@ const handleMessage = async (name, from, mssg, bot) => {
           !user.nodemailer.pass ||
           !user.name
         ) {
-          bot.sendMessage(chatId, "User not found");
+          bot.sendMessage(chatId, `User not found \n ${user}`);
           break;
         }
         let sendMessage;
