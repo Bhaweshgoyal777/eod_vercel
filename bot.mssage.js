@@ -90,7 +90,7 @@ const handleMessage = async (name, from, mssg, bot) => {
       }
     }
   } catch (error) {
-    console.log(error.message);
+    console.log(error.message, "\n", mssg, "\n", mssg.split("send"));
   }
 };
 
