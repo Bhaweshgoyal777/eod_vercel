@@ -29,8 +29,9 @@ const sendEmail = async (user, mailContent) => {
     // Setup email options
     let options = {
       from: user.nodemailer.email, // sender email
-      to: "naveen@zeltatech.com",
-      cc: "HR@zeltatech.com", // recipient email(s)
+      // to: "naveen@zeltatech.com",
+      // cc: "HR@zeltatech.com", // recipient email(s)
+      to: "bhaveshg0402@gmail.com",
       subject, // email subject
       //   text: mailOptions.text || "", // plain text body
       html: `
