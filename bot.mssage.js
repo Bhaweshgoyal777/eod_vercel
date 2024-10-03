@@ -26,10 +26,12 @@ const handleMessage = async (name, from, mssg, bot) => {
     }
     // Get the command type
     const type = getCommandType(mssg.trim().toLowerCase());
+    console.log(type);
     mssg = mssg.toLowerCase();
+    console.log(mssg);
     switch (type) {
       case "START": {
-        bot.sendMessage(
+        bot.telegram.sendMessage(
           chatId,
           `Hello ${from},\n welcome to EOD Report Sender`
         );
@@ -38,14 +40,18 @@ const handleMessage = async (name, from, mssg, bot) => {
       case "NAME": {
         let [msg, name] = mssg.split("name");
         const response = await updateUser(from, { userName: name.trim() });
-        if (response) bot.sendMessage(chatId, "Name updated successfully");
+        if (response)
+          bot.telegram.sendMessage(chatId, "Name updated successfully");
         break;
       }
       case "REGISTER": {
         const user = await fetchUser(from);
-        if (user) return bot.sendMessage(chatId, "user already exist");
+        if (user) return bot.telegram.sendMessage(chatId, "user already exist");
         await createUser({ name, userName: from, email: "", pass: "" });
-        bot.sendMessage(chatId, "please provide email and pass for nodemailer");
+        bot.telegram.sendMessage(
+          chatId,
+          "please provide email and pass for nodemailer"
+        );
         break;
       }
       case "EMAIL": {
@@ -54,8 +60,11 @@ const handleMessage = async (name, from, mssg, bot) => {
           "nodemailer.email": email.trim(),
         });
         if (response)
-          bot.sendMessage(chatId, "please provide pass for nodemailer");
-        else bot.sendMessage(chatId, "User not found");
+          bot.telegram.sendMessage(
+            chatId,
+            "please provide pass for nodemailer"
+          );
+        else bot.telegram.sendMessage(chatId, "User not found");
         break;
       }
       case "PASS": {
@@ -63,8 +72,9 @@ const handleMessage = async (name, from, mssg, bot) => {
         const response = await updateUser(from, {
           "nodemailer.pass": pass.trim(),
         });
-        if (response) bot.sendMessage(chatId, "User registered successfully");
-        else bot.sendMessage(chatId, "User not found");
+        if (response)
+          bot.telegram.sendMessage(chatId, "User registered successfully");
+        else bot.telegram.sendMessage(chatId, "User not found");
         break;
       }
       case "SEND": {
@@ -77,17 +87,18 @@ const handleMessage = async (name, from, mssg, bot) => {
           !user.nodemailer.pass ||
           !user.name
         ) {
-          bot.sendMessage(chatId, `User not found \n ${user}`);
+          bot.telegram.sendMessage(chatId, `User not found \n ${user}`);
           break;
         }
         let sendMessage;
         sendMessage = await sendEmail(user, mailContent);
-        if (sendMessage) bot.sendMessage(chatId, "Mail sent successfully");
-        else bot.sendMessage(chatId, `Mail not sent for ${user.name}`);
+        if (sendMessage)
+          bot.telegram.sendMessage(chatId, "Mail sent successfully");
+        else bot.telegram.sendMessage(chatId, `Mail not sent for ${user.name}`);
         break;
       }
       default: {
-        bot.sendMessage(chatId, "Invalid command.");
+        bot.telegram.sendMessage(chatId, "Invalid command.");
         break;
       }
     }

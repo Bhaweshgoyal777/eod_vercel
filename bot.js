@@ -1,13 +1,24 @@
-// const { Telegraf } = require('telegraf');
+const { Context, session, Telegraf } = require("telegraf");
 // import TelegramBot from "node-telegram-bot-api";
 
-const TelegramBot = require("node-telegram-bot-api");
 const { handleMessage } = require("./bot.mssage");
 
 require("dotenv").config();
 const token = process.env.TELEGRAM_TOKEN;
 
-const bot = new TelegramBot(token, { polling: true });
+// const bot = new TelegramBot(token, { polling: true });
+const bot = new Telegraf(token);
+
+bot.use(session());
+// Launch bot
+bot
+  .launch()
+  .then(() => {
+    console.info(`Telegram Bot launched successfully.`);
+  })
+  .catch((error) => {
+    console.error(`Error launching Telegram Bot: ${error.message}`);
+  });
 
 function initBot() {
   bot.on("channel_post", (msg) => {

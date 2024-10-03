@@ -27,7 +27,7 @@
 //     }
 //     console.log({ resultPop }, "=====================");
 //     for (let user of resultPop) {
-//       bot.sendMessage(
+//       bot.telegram.sendMessage(
 //         chatId,
 //         `User ${user.name} has not submitted EOD for today \n 🤘🤘Chin Tapak dam dam🤘🤘.... \n @${user.userName}`
 //       );
