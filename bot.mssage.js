@@ -268,7 +268,11 @@ const handleMessage = async (name, from, mssg, bot) => {
 
         const sendMessage = await sendEmail(user, mailContent);
         if (sendMessage) {
-          await bot.telegram.sendMessage(chatId, "Mail sent successfully.");
+          await bot.telegram.sendMessage(
+            chatId,
+            `Mail sent successfully. , 
+            \n Thanks - ${user.name} `
+          );
         } else {
           await bot.telegram.sendMessage(
             chatId,
